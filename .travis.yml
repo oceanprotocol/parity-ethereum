@@ -15,10 +15,5 @@ script:
 
 after_script:
   - docker images
-
-before_deploy:
   - docker login -u "${DOCKERHUB_USER}" -p "${DOCKERHUB_PASS}"
-
-deploy:
-  provider: script
-  script: docker push "${IMAGE_NAME}:latest" && docker push "${IMAGE_NAME}:${TRAVIS_BRANCH}"
+  - docker push "${IMAGE_NAME}:latest" && docker push "${IMAGE_NAME}:${TRAVIS_BRANCH}"
