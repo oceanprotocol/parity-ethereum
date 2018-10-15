@@ -6,7 +6,6 @@ services:
 env:
   global:
     - IMAGE_NAME=parity-ethereum
-    - DOCKERHUB_USER=oceanprotocol
 
 before_script:
 
@@ -16,4 +15,4 @@ script:
 after_script:
   - docker images
   - docker login -u "${DOCKERHUB_USER}" -p "${DOCKERHUB_PASS}"
-  - docker push "${IMAGE_NAME}:latest" && docker push "${IMAGE_NAME}:${TRAVIS_BRANCH}"
+  - docker push "${DOCKERHUB_USER}/${IMAGE_NAME}:${TRAVIS_BRANCH}"
