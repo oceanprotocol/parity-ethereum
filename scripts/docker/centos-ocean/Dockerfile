@@ -27,11 +27,13 @@ FROM centos:latest
 
 RUN mkdir -p /opt/parity/data && \
     chmod g+rwX /opt/parity/data && \
-    mkdir -p /opt/parity/release
+    curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -o /usr/local/bin/jq && \
+    chmod +x /usr/local/bin/jq
 
 COPY --from=builder /build/parity-ethereum/target/release /opt/parity/
 
 WORKDIR /opt/parity/data
+ADD ./scripts/docker/centos-ocean/entrypoint.sh /entrypoint.sh
 
 # exposing default ports
 #
@@ -45,4 +47,4 @@ EXPOSE 5001 8082 8083 8180 8545 8546 30303/tcp 30303/udp
 
 #if no base path provided, assume it's current workdir
 CMD ["--base-path","."]
-ENTRYPOINT ["/opt/parity/release/parity"]
+ENTRYPOINT ["/opt/parity/parity"]
