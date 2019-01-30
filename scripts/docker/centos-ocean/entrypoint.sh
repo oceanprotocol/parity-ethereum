@@ -5,7 +5,7 @@ if [ "${CONFIGURE_ACL}" = "true" ]; then
     acl_contract="${ACL_CONTRACT_ADDRESS}"
   else
     echo "Waiting for contracts to be generated..."
-    while [ ! -f "/contracts/ready" ] || [ -f "/contracts/AccessConditions.${NETWORK}.json" ]; do
+    while [ ! -f "/contracts/ready" ] || [ ! -f "/contracts/AccessConditions.${NETWORK}.json" ]; do
       sleep 2
     done
     acl_contract=$(cat /contracts/AccessConditions.${NETWORK}.json | jq -r .address)
